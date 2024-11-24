@@ -26,15 +26,7 @@ const hit = new Audio('sounds/Hit.wav')
 const backgroundSound = new Audio('sounds/background.ogg')
 export const jump = new Audio('sounds/Jump2.wav')
 
-backgroundSound.play()
-backgroundSound.volume = 0.3
-
-window.onload = () => {
-    backgroundSound.play()
-    backgroundSound.volume = 0.3
-}
-
-
+let bgMusicIsPlaying = false
 let blockPlayerTwoMovement = false
 let blockPlayerOneMovement = false
 let frameCountOne = 0
@@ -42,10 +34,18 @@ let frameCountTwo = 0
 
 const playerOne = new Player(ctx, playerOneImage,0,0,0)    //(context, image,x,y)
 const playerTwo = new Player(ctx, playerTwoImage,1650,0,6) //(context, image,x,y)
-
-
 const playerProjectiles = []
 
+
+const playBgMusic = () => {
+    if(bgMusicIsPlaying == false)
+    {
+    bgMusicIsPlaying = true    
+    backgroundSound.loop = true
+    backgroundSound.play()
+    backgroundSound.volume = 0.3
+    }
+}
 
 const drawPlayerProjectiles = () => {
     playerProjectiles.forEach((projectile) => {
@@ -140,7 +140,7 @@ gameLoop();
 
 window.addEventListener("keydown", (event) => {
     const key = event.key.toLocaleLowerCase() 
-    
+    playBgMusic()
     if(blockPlayerOneMovement == false){
     if(key === "arrowleft")  playerOne.direction.left = true
     if(key === "arrowright") playerOne.direction.right = true
