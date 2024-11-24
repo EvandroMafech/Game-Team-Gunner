@@ -5,7 +5,7 @@ import spriteAnimation from "./spriteAnimation.js"
 import walls from "./wallFabric.js"
 
 class Player {
-    constructor(ctx,image,x,y,sheetPosition){
+    constructor(ctx,image,x,y,sheetPosition,direction){
         this.position = {
         x: x,
         y: y
@@ -34,7 +34,7 @@ class Player {
         this.isShooting = false
         this.initXposition
         this.stopShootAnimation = false
-        this.currentDirection = "right"
+        this.currentDirection = direction
         this.playerState = "idle"
         //
         this.offsetImage = 19

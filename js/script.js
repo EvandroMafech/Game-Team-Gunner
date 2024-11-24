@@ -31,11 +31,13 @@ let blockPlayerTwoMovement = false
 let blockPlayerOneMovement = false
 let frameCountOne = 0
 let frameCountTwo = 0
+let resetingGame = false
 
-const playerOne = new Player(ctx, playerOneImage,0,0,0)    //(context, image,x,y)
-const playerTwo = new Player(ctx, playerTwoImage,1650,0,6) //(context, image,x,y)
+const playerOne = new Player(ctx, playerOneImage,0,0,0,"right")    //(context, image,x,y)
+const playerTwo = new Player(ctx, playerTwoImage,1650,0,6,"left") //(context, image,x,y)
 const playerProjectiles = []
 
+console.log(playerOne)
 
 const playBgMusic = () => {
     if(bgMusicIsPlaying == false)
@@ -54,11 +56,44 @@ const drawPlayerProjectiles = () => {
     })
 }
 
+const resetGame = () => {
+ 
+if(!resetingGame)
+{
+ 
+ resetingGame = true
+ bgMusicIsPlaying = false
+ blockPlayerTwoMovement = false
+ blockPlayerOneMovement = false
 
+ playerOne.position.x = 0
+ playerOne.position.y = 0
+
+ playerTwo.position.x = 1650
+ playerTwo.position.y = 0
+
+ playerOne.playerState = "idle"
+ playerTwo.playerState = "idle"
+
+ playerOne.win = false 
+ playerTwo.win = false
+ 
+ playerOne.die = false
+ playerTwo.die = false
+ 
+ playerOne.isOnGround = false
+ playerTwo.isOnGround = false
+
+ playerOne.isJumping = false
+ playerTwo.isJumping = false
+
+
+ instructions.style.display = "block"   
+}
+} 
 
 
 const gameLoop = () => {
-
     ctx.clearRect(0,0, canvasWidth,canvasHeight)
     ctx.drawImage(background,0,0)
   
@@ -89,35 +124,33 @@ const gameLoop = () => {
     if(playerOne.win){
         blockPlayerTwoMovement = true
         if(playerTwo.playerState != "die") hit.play()
-        
+            resetingGame = false
         playerTwo.action.shoot = false
         playerTwo.direction.left = false
         playerTwo.direction.right = false
         playerTwo.action.jump = false
-    
         playerTwo.playerState = "die"
       
         setTimeout(() => {
-          //  instructions.style.display = "flex"
-            location.reload()
-        
-        },1000)
+            resetGame()
+        },2000)
     } 
     playerTwo.checkBulletHit(playerProjectiles,ProjectileWalls,playerOne.position.x,playerOne.position.y)
     if(playerTwo.win){
         blockPlayerOneMovement = true
         if(playerOne.playerState != "die") hit.play()
+        
+            resetingGame = false
         playerOne.action.shoot = false
         playerOne.direction.left = false
         playerOne.direction.right = false
         playerOne.action.jump = false
-
         playerOne.playerState = "die"
-        
+      
         setTimeout(() => {
-          //  instructions.style.display = "flex"
-            location.reload()
-        },1000)
+            resetGame()   
+        },2000)
+         
     } 
 
     playerOne.applyGravity()
