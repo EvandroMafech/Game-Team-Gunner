@@ -67,10 +67,10 @@ if(!resetingGame)
  blockPlayerOneMovement = false
 
  playerOne.position.x = 0
- playerOne.position.y = 0
+ playerOne.position.y = 300
 
  playerTwo.position.x = 1650
- playerTwo.position.y = 0
+ playerTwo.position.y = 300
 
  playerOne.playerState = "idle"
  playerTwo.playerState = "idle"
