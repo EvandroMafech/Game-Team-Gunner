@@ -89,13 +89,19 @@ const gameLoop = () => {
     if(playerOne.win){
         blockPlayerTwoMovement = true
         if(playerTwo.playerState != "die") hit.play()
+        
         playerTwo.action.shoot = false
         playerTwo.direction.left = false
         playerTwo.direction.right = false
         playerTwo.action.jump = false
     
         playerTwo.playerState = "die"
-        setTimeout(() => {location.reload()},2000)
+      
+        setTimeout(() => {
+          //  instructions.style.display = "flex"
+            location.reload()
+        
+        },1000)
     } 
     playerTwo.checkBulletHit(playerProjectiles,ProjectileWalls,playerOne.position.x,playerOne.position.y)
     if(playerTwo.win){
@@ -109,9 +115,9 @@ const gameLoop = () => {
         playerOne.playerState = "die"
         
         setTimeout(() => {
-            instructions.style.display = "flex"
+          //  instructions.style.display = "flex"
             location.reload()
-        },2000)
+        },1000)
     } 
 
     playerOne.applyGravity()
